@@ -1,11 +1,11 @@
 package by.upmebel.upmecutfile.controller;
 
+import by.upmebel.upmecutfile.dto.FurnitureCreateDTO;
 import by.upmebel.upmecutfile.model.Furniture;
 import by.upmebel.upmecutfile.service.FurnitureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,8 +35,14 @@ public class FurnitureController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Furniture> createFurniture(@RequestBody Furniture furniture) {
+    public ResponseEntity<Furniture> createFurniture(@RequestBody FurnitureCreateDTO furnitureDTO) {
+        Furniture furniture = new Furniture();
+        furniture.setLength(furnitureDTO.getLength());
+        furniture.setWidth(furnitureDTO.getWidth());
+        furniture.setHeight(furnitureDTO.getHeight());
+
         Furniture savedFurniture = furnitureService.saveFurniture(furniture);
+
         return new ResponseEntity<>(savedFurniture, HttpStatus.CREATED);
     }
 
